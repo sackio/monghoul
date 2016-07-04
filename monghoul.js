@@ -53,6 +53,7 @@ var Monghoul = function(O){
       }
     , function(cb){
         try {
+console.log(a.o.page.plainText);
           gb['data'] = Belt.parse(a.o.page.plainText);
           return cb();
         } catch(e) {
