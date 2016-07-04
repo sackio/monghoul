@@ -60,6 +60,7 @@ var Monghoul = function(O){
         }
       }
     ], function(err){
+      Belt.get(a.o, 'page.close()');
       return a.cb(err, gb.response)
     });
   };
