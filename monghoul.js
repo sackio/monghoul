@@ -39,6 +39,8 @@ var Monghoul = function(O){
       //data
     });
 
+    var gb ={};
+
     return Async.waterfall([
       function(cb){
         return a.o.page.open(a.o.url(a.o), {
@@ -49,11 +51,10 @@ var Monghoul = function(O){
           , 'Accept': 'application/json'
           }
         , 'data': Belt.stringify(a.o.data)
-        }, Belt.cw(cb, 0));
+        }, Belt.cw(cb));
       }
     , function(cb){
         try {
-console.log(a.o.page.plainText);
           gb['data'] = Belt.parse(a.o.page.plainText);
           return cb();
         } catch(e) {
