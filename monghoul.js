@@ -96,7 +96,7 @@ var Monghoul = function(O){
         , 'page'
         ])
       }, a.o), a.cb);
-    });
+    };
   });
 
   return M;
