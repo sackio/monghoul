@@ -82,6 +82,7 @@ var Monghoul = function(O){
   , 'insertMany'
   , 'deleteOne'
   , 'deleteMany'
+  , 'count'
   ], function(v){
     M[v] = function(options, callback){
       var a = Belt.argulint(arguments)
