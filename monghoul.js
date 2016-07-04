@@ -63,7 +63,10 @@ var Monghoul = function(O){
       }
     ], function(err){
       Belt.get(a.o, 'page.close()');
-      return a.cb(err, gb.response)
+
+      if (!err && Belt.get(gb, 'response.error')) err = new Error(gb.response.error);
+
+      return a.cb(err, Belt.get(gb.response, 'data'));
     });
   };
 
