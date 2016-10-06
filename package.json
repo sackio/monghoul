@@ -34,4 +34,7 @@
     "grunt": "~0.4.5"
   },
   "keywords": []
+, "dependencies": {
+    "mongro": "git://github.com/sackio/mongro.git#master"
+  }
 }

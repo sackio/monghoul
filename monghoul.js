@@ -18,20 +18,64 @@
 var Monghoul = function(O){
   var M = {};
 
-  O = O || {
+  O = _.defaults(O || {}, {
+    'port': '9354'
+  });
 
-  };
+  O = _.defaults(O || {}, {
+    'host': 'http://localhost:' + O.port
+  });
 
 ////////////////////////////////////////////////////////////////////////////////
 ////METHODS                                                                 ////
 ////////////////////////////////////////////////////////////////////////////////
+
+  M['startMongodb'] = function(options, callback){
+    var a = Belt.argulint(arguments)
+      , self = this
+      , gb = {};
+    a.o = _.defaults(a.o, {
+      'port': O.port
+    , 'command': 'node'
+    , 'args': [
+        './node_modules/mongro/lib/server.js'
+      , 'express.port=' + O.port
+      ]
+    });
+    a.o = _.defaults(a.o, {
+      'args': [
+        './node_modules/mongro/lib/server.js'
+      , 'express.port=' + O.port
+      ]
+    });
+
+    Belt.get(self, '_mongodb.kill("SIGKILL")');
+
+    self['_mongodb'] = CP.spawn(a.o.command, a.o.args);
+
+    if (a.o.verbose){
+      self._mongodb.stdout.on('data', function(d){
+        console.log('MONGRO SERVER - STDOUT: ' + JSON.stringify(d));
+      });
+
+      self._mongodb.stderr.on('data', function(d){
+        console.log('MONGRO SERVER - STDERR: ' + JSON.stringify(d));
+      });
+    }
+
+    self._mongodb.on('exit', function(code){
+      console.log('MONGRO Exited with Code: ' + code);
+    });
+
+    console.log('MONGRO SERVER STARTED ON PORT ' + a.o.port);
+  };
 
   M['_request'] = function(options, callback){
     var a = Belt.argulint(arguments)
       , self = this;
     a.o = _.defaults(a.o, {
       'page': Webpage.create()
-    , 'host': 'http://localhost:9354'
+    , 'host': O.host
     , 'url': _.template('<%= host %>/db/<%= db %>/collection/<%= collection %>/method/<%= method %>.json')
       //db
       //collection
