@@ -40,7 +40,7 @@ var Monghoul = function(O){
       , self = this
       , gb = {};
     a.o = _.defaults(a.o, {
-    , 'command': 'node'
+      'command': 'node'
     , 'express': O.express
     , 'mongodb': O.mongodb
     });
