@@ -19,7 +19,7 @@ var Monghoul = function(O){
   var M = {};
 
   O = _.defaults(O || {}, {
-    //mongro
+    //express
       //port
     //mongodb
       //host
@@ -40,21 +40,18 @@ var Monghoul = function(O){
       , self = this
       , gb = {};
     a.o = _.defaults(a.o, {
-      'port': O.mongre.port
     , 'command': 'node'
-      //mongodb
-        //host
-        //port
-        //db
+    , 'express': O.express
+    , 'mongodb': O.mongodb
     });
     a.o = _.defaults(a.o, {
-      'args': [
+      'args': ([
         './node_modules/mongro/lib/server.js'
-      , '--express.port=' + a.o.port
-      , '--mongodb.host=' + a.o.mongodb.host
-      , '--mongodb.port=' + a.o.mongodb.port
-      , '--mongodb.db=' + a.o.mongodb.db
-      ]
+      ].concat(_.map(a.o.express, function(v, k){
+        return '--express.' + k + '=' + v;
+      })).concat(_.map(a.o.mongodb, function(v, k){
+        return '--mongodb.' + k + '=' + v;
+      })))
     });
 
     Belt.get(self, '_mongodb.kill("SIGKILL")');
