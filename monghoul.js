@@ -20,6 +20,10 @@ var Monghoul = function(O){
 
   O = _.defaults(O || {}, {
     'port': '9354'
+    //mongodb
+      //host
+      //port
+      //db
   });
 
   O = _.defaults(O || {}, {
@@ -37,15 +41,18 @@ var Monghoul = function(O){
     a.o = _.defaults(a.o, {
       'port': O.port
     , 'command': 'node'
-    , 'args': [
-        './node_modules/mongro/lib/server.js'
-      , 'express.port=' + O.port
-      ]
+      //mongodb
+        //host
+        //port
+        //db
     });
     a.o = _.defaults(a.o, {
       'args': [
         './node_modules/mongro/lib/server.js'
-      , 'express.port=' + O.port
+      , '--express.port=' + a.o.port
+      , '--mongodb.host=' + a.o.mongodb.host
+      , '--mongodb.port=' + a.o.mongodb.port
+      , '--mongodb.db=' + a.o.mongodb.db
       ]
     });
 
