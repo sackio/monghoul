@@ -19,7 +19,8 @@ var Monghoul = function(O){
   var M = {};
 
   O = _.defaults(O || {}, {
-    'port': '9354'
+    //mongro
+      //port
     //mongodb
       //host
       //port
@@ -39,7 +40,7 @@ var Monghoul = function(O){
       , self = this
       , gb = {};
     a.o = _.defaults(a.o, {
-      'port': O.port
+      'port': O.mongre.port
     , 'command': 'node'
       //mongodb
         //host
