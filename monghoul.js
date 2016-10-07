@@ -58,21 +58,21 @@ var Monghoul = function(O){
 
     self['_mongodb'] = CP.spawn(a.o.command, a.o.args);
 
-    if (a.o.verbose){
-      self._mongodb.stdout.on('data', function(d){
-        console.log('MONGRO SERVER - STDOUT: ' + JSON.stringify(d));
-      });
+    self._mongodb.stdout.on('data', function(d){
+      if (d.match(/\/\/READY\/\//)){
+        console.log('MONGRO SERVER STARTED ON PORT ' + a.o.express.port);
+        return a.cb()
+      }
+      if (a.o.verbose) console.log('MONGRO SERVER - STDOUT: ' + JSON.stringify(d));
+    });
 
-      self._mongodb.stderr.on('data', function(d){
-        console.log('MONGRO SERVER - STDERR: ' + JSON.stringify(d));
-      });
-    }
+    self._mongodb.stderr.on('data', function(d){
+      if (a.o.verbose) console.log('MONGRO SERVER - STDERR: ' + JSON.stringify(d));
+    });
 
     self._mongodb.on('exit', function(code){
       console.log('MONGRO Exited with Code: ' + code);
     });
-
-    console.log('MONGRO SERVER STARTED ON PORT ' + a.o.port);
   };
 
   M['_request'] = function(options, callback){
